@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/search.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo__title"><img src="/assets/pp_title.png" alt="title"/></div>
+            <div class="logo__img"><img src="/assets/pp_logo.png" alt="logo" /></div>
+        </div>
+        <div class="tagline">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</div>
+        <div class="mainSearchbar">
+            <input type="text" placeholder="Rechercher une recette, un ingrédient, ..." />
+            <div class="mainSearchbar__loop"><img src="/assets/pp_loop.png" alt="loop" /></div>
+        </div>
+    </header>
+    <div class="tags">
+        <div class="tags__all">
+        </div>
+        <div class="tags__results">
+            <div class="tags__results__amunt"></div>
+            <div class="tags__results__label"> recettes</div>
+        </div>
+    </div>
+    <div class="recipesContainer">
+    </div>
+    <script type="module" src="../js/templates/cardRecipe.js"></script>
+    <script type="module" src="../js/search.js"></script>
+</body>
+</html>
+
