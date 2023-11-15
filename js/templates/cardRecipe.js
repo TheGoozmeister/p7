@@ -8,16 +8,20 @@ export function recipeTemplate (recipeDatas) {
 
         ingredients.forEach((ingredient)=>{
             const ingredientName = ingredient.ingredient;
-            const quantity = ingredient.quantity;
-            const unit = ingredient.unit;
+            let quantity = ingredient.quantity;
+            if (!quantity) {
+                quantity = "";
+            }
+            let unit = ingredient.unit;
+            if (!unit) {
+                unit = "";
+            }
 
             const oneIngredient = document.createElement('div');
             oneIngredient.classList.add('ingredient');
             oneIngredient.innerHTML = `
-                <div class="ingredient">
-                    <div class="ingredient__name">${ingredientName}</div>
-                    <div class="ingredient__quantity">${quantity} ${unit}</div>
-                </div>
+                <div class="ingredient__name">${ingredientName}</div>
+                <div class="ingredient__quantity">${quantity} ${unit}</div>
             `;
 
             ingredientList.appendChild(oneIngredient);
@@ -32,7 +36,7 @@ export function recipeTemplate (recipeDatas) {
         recipeCard.innerHTML = `
         <div class="cardRecipe__image">
             <img src="${picture}" alt="${name}" class="cardRecipe__image__img" />
-            <div class="cardRecipe__image__time">${time}</div>
+            <div class="cardRecipe__image__time">${time} min</div>
         </div>
         <div class="cardRecipe__name">${name}</div>
         <div class="cardRecipe__recipe">
