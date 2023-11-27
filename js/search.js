@@ -303,9 +303,66 @@ function addRecipesToDOM(recipes) {
 
 function ingredientSearch() {
     const ingredientSearchBar = document.getElementById('ingredientSearchBar');
+    
     ingredientSearchBar.addEventListener('click', function() {
         let ingredientSearch = ingredientSearchBar.value;
+        let matchIngredients = [];
+        for (let i=0; i<recipes.length; i++) {
+            const recipeIngredients = recipes[i].ingredients;
+            for (let j=0; j<recipeIngredients.length; j++) {
+                let ingredient = recipeIngredients[j].ingredient
+                if (isString1IncludeInString2(ingredientSearch, ingredient)) {
+                    if (!isKeyWordAlreadyInArray(ingredient, matchIngredients)) {
+                        matchIngredients.push(ingredient);
+                    }
+                }
+            }
+        }
+        addKeywordsToDOM(matchIngredients, "ingredients");
+        addTagsToDOM(recipes);
+    })
+}
 
+function ustensilesSearch() {
+    const ustensileSearchBar = document.getElementById('ustensileSearchBar');
+    
+    ustensileSearchBar.addEventListener('click', function() {
+        let ustensileSearch = ustensileSearchBar.value;
+        console.log(ustensileSearch)
+        let matchUstensiles = [];
+        for (let i=0; i<recipes.length; i++) {
+            const recipeUstensiles = recipes[i].ustensils;
+            for (let j=0; j<recipeUstensiles.length; j++) {
+                let ustensile = recipeUstensiles[j];
+                if (isString1IncludeInString2(ustensileSearch, ustensile)) {
+                    if (!isKeyWordAlreadyInArray(ustensile, matchUstensiles)) {
+                        matchUstensiles.push(ustensile);
+                        console.log("ok")
+                    }
+                }
+            }
+        }
+        addKeywordsToDOM(matchUstensiles, "ustensiles");
+        addTagsToDOM(recipes);
+    })
+}
+
+function applianceSearch() {
+    const applianceSearchBar = document.getElementById('applianceSearchBar')
+
+    applianceSearchBar.addEventListener('click', function(){
+        let applianceSearch = applianceSearchBar.value;
+        let matchAppliance = [];
+        for (let i=0; i<recipes.length; i++) {
+            const recipeAppliance = recipes[i].appliance;
+            if (isString1IncludeInString2(applianceSearch, recipeAppliance)) {
+                if (!isKeyWordAlreadyInArray(recipeAppliance, matchAppliance)) {
+                    matchAppliance.push(recipeAppliance);
+                }
+            }
+        }
+        addKeywordsToDOM(matchAppliance, "appliance");
+        addTagsToDOM(recipes);
     })
 }
 
@@ -372,6 +429,9 @@ function main() {
     })
     
     dropdown();
+    ingredientSearch();
+    ustensilesSearch();
+    applianceSearch();
 }
 
 main();

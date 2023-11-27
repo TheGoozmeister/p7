@@ -235,6 +235,7 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 10px 15px 10px 15px;
+  margin-left: 15px;
 }
 .tag__cross:hover {
   cursor: pointer;
