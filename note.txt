@@ -1,2 +1,7 @@
-dicussion avec papounet 
-
+recherche champs secondaires
+actualiser recettes en fonction des tags OK
+gérer les display 
+gérer les majuscules/minuscules
+gérer css card
+faire deuxieme algo sur deuxieme branche
+gérer lactualisation quand on clique sur une croix

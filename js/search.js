@@ -1,16 +1,349 @@
 import recipes from "../datas/recipes.js";
 import { recipeTemplate } from './templates/cardRecipe.js';
 
-async function main() {
-    console.log(recipes);
-    const recipesContainer =document.querySelector('.recipesContainer');
+function dropdown() {
+    const ingredientsDropdown = document.getElementById('ingredientsDropdown');
+    const ingredientKeywords = document.getElementById('ingredientsKeywords');
+    const ingredientsDropup = document.getElementById('ingredientsDropup');
 
-    recipes.forEach((recipe)=>{
+    const applianceDropdown = document.getElementById('applianceDropdown');
+    const applianceKeywords = document.getElementById('applianceKeywords');
+    const applianceDropup = document.getElementById('applianceDropup');
+
+    const ustensilesDropdown = document.getElementById('ustensilesDropdown');
+    const ustensilesKeywords = document.getElementById('ustensilesKeywords');
+    const ustensilesDropup = document.getElementById('ustensilesDropup');
+
+    ingredientsDropdown.addEventListener("click", function() {
+        ingredientKeywords.style.display = "block";
+        ingredientsDropup.style.display = "block";
+        ingredientsDropdown.style.display = "none";
+    })
+    ingredientsDropup.addEventListener("click", function () {
+        ingredientKeywords.style.display = "none";
+        ingredientsDropup.style.display = "none";
+        ingredientsDropdown.style.display = "block";
+    })
+
+    applianceDropdown.addEventListener("click", function() {
+        applianceKeywords.style.display = "block";
+        applianceDropup.style.display = "block";
+        applianceDropdown.style.display = "none";
+    })
+    applianceDropup.addEventListener("click", function () {
+        applianceKeywords.style.display = "none";
+        applianceDropup.style.display = "none";
+        applianceDropdown.style.display = "block";
+    })
+
+    ustensilesDropdown.addEventListener("click", function() {
+        ustensilesKeywords.style.display = "block";
+        ustensilesDropup.style.display = "block";
+        ustensilesDropdown.style.display = "none";
+    })
+    ustensilesDropup.addEventListener("click", function () {
+        ustensilesKeywords.style.display = "none";
+        ustensilesDropup.style.display = "none";
+        ustensilesDropdown.style.display = "block";
+    })
+}
+
+function isString1IncludeInString2(string1, string2) {
+    const string1Length = string1.length;
+    const string2Length = string2.length;
+    const string1LowerCase = string1.toLowerCase();
+    const string2LowerCase = string2.toLowerCase();
+
+    for (let i=0; i<=string2Length-string1Length; i++) {
+        let match = true;
+        for (let j=0; j<string1Length; j++) {
+            if (string2LowerCase[i+j]!==string1LowerCase[j]) {
+                match = false;
+                break;
+            }
+        }
+        if (match) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function isRecipeAlreadyInArray(recipeId, recipesArray) {
+    for (let i=0; i<recipesArray.length; i++) {
+        if (recipesArray[i].id==recipeId) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function addKeywordsToDOM(tagsArray, tagName) {
+    const tag = document.querySelector(`.${tagName}__search__suggests`);
+    let tagsHTML = "";
+    for (let i=0; i<tagsArray.length; i++) {
+        tagsHTML += `
+        <div class="keyword__suggest ${tagName}Suggest">
+            ${tagsArray[i]}                  
+        </div>
+        `;
+    }
+    tag.innerHTML = tagsHTML;
+}
+
+function isKeyWordAlreadyInArray(keyword, array) {
+    for (let i=0;i<array.length;i++) {
+        if (array[i]==keyword) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function addTagsToDOM(matchRecipes) {
+
+    let tags = {
+        ingredients: [],
+        appliances: [],
+        ustensiles: [],
+    }
+
+    const ingredientKeywords = Array.from(document.querySelectorAll(".ingredientsSuggest"));
+    const applianceKeywords = Array.from(document.querySelectorAll(".applianceSuggest"));
+    const ustensileKeywords = Array.from(document.querySelectorAll(".ustensilesSuggest"));
+
+
+    for (let i=0; i<ingredientKeywords.length; i++) {
+        const ingredientKeyword = ingredientKeywords[i];
+        const cleanKeyword = ingredientKeyword.textContent.trim();
+
+        ingredientKeyword.addEventListener("click", function() {
+            const tag = document.createElement('div');
+            tag.classList.add("tag");
+            tag.innerHTML = `
+                <div class="tag__name">
+                    ${ingredientKeyword.textContent}
+                </div>
+                <div class="tag__cross">
+                    <img src="../assets/pp_cross.png" alt="cross" />
+                </div>
+            `; 
+
+            const cross = tag.querySelector('.tag__cross');
+            cross.addEventListener('click', function () {
+                tag.remove();
+            });
+
+            const ingredientTags = document.querySelector('.selectedTags__ingredients');
+            ingredientTags.appendChild(tag);
+            tags.ingredients.push(cleanKeyword);
+            ingredientKeyword.remove();
+            updateRecipesWithTags(tags, matchRecipes);
+        })  
+    }
+
+    for (let i=0; i<applianceKeywords.length; i++) {
+        const applianceKeyword = applianceKeywords[i];
+        const cleanKeyword = applianceKeyword.textContent.trim();
+
+        applianceKeyword.addEventListener("click", function() {
+            const tag = document.createElement('div');
+            tag.classList.add("tag");
+            tag.innerHTML = `
+                <div class="tag__name">
+                    ${applianceKeyword.textContent}
+                </div>
+                <div class="tag__cross">
+                    <img src="../assets/pp_cross.png" alt="cross" />
+                </div>
+            `; 
+
+            const cross = tag.querySelector('.tag__cross');
+            cross.addEventListener('click', function () {
+                tag.remove();
+            });
+
+            const applianceTags = document.querySelector('.selectedTags__appliance');
+            applianceTags.appendChild(tag);
+            tags.appliances.push(cleanKeyword);
+            applianceKeyword.remove();
+            updateRecipesWithTags(tags, matchRecipes);
+        })  
+    }
+
+    for (let i=0; i<ustensileKeywords.length; i++) {
+        const ustensileKeyword = ustensileKeywords[i];
+        const cleanKeyword = ustensileKeyword.textContent.trim();
+
+        ustensileKeyword.addEventListener("click", function() {
+            const tag = document.createElement('div');
+            tag.classList.add("tag");
+            tag.innerHTML = `
+                <div class="tag__name">
+                    ${ustensileKeyword.textContent}
+                </div>
+                <div class="tag__cross">
+                    <img src="../assets/pp_cross.png" alt="cross" />
+                </div>
+            `; 
+
+            const cross = tag.querySelector('.tag__cross');
+            cross.addEventListener('click', function () {
+                tag.remove();
+            });
+
+            const ustensileTags = document.querySelector('.selectedTags__ustensiles');
+            ustensileTags.appendChild(tag);
+            tags.ustensiles.push(cleanKeyword);
+            ustensileKeyword.remove();
+            updateRecipesWithTags(tags, matchRecipes);
+        })  
+    }
+
+    
+    // update with tags
+
+    return tags;
+}
+
+function updateRecipesWithTags(tags, recipes) {
+    let updatedRecipes = [];
+
+    for (let i=0; i<recipes.length; i++) {
+        const recipe =  recipes[i];
+        if (areTagsInRecipe(tags, recipe)){
+            updatedRecipes.push(recipe);
+        }
+    }
+    addRecipesToDOM(updatedRecipes);
+}
+
+function areTagsInRecipe(tags, recipe) {
+    const {ingredients, appliances, ustensiles} = tags;
+    let isRecipeOk = true;
+
+    for (let i=0; i<ingredients.length; i++) {
+        const ingredientTag= ingredients[i].toLowerCase();
+        let isIngredientIncluded = false;
+
+        for (let j=0; j<recipe.ingredients.length; j++) {
+            const ingredient = recipe.ingredients[j].ingredient.toLowerCase();
+            if (ingredient === ingredientTag) {
+                isIngredientIncluded = true;
+                break;
+            }
+        }
+        if (!isIngredientIncluded) {
+            isRecipeOk = false;
+            break;
+        }
+    }
+    console.log(tags);
+    if (appliances.length>0) {
+        const applianceTag = appliances[0].toLowerCase();
+        const isApplianceIncluded = recipe.appliance.toLowerCase() === applianceTag;
+
+        if (!isApplianceIncluded) {
+            isRecipeOk = false;
+        }
+    }
+
+    for (let i = 0; i < ustensiles.length; i++) {
+        const ustensilTag = ustensiles[i].toLowerCase();
+        let isUstensilIncluded = false;
+
+        for (let j = 0; j < recipe.ustensils.length; j++) {
+            const ustensil = recipe.ustensils[j].toLowerCase();
+            if (ustensil === ustensilTag) {
+                isUstensilIncluded = true;
+                break;
+            }
+        }
+
+        if (!isUstensilIncluded) {
+            isRecipeOk = false;
+            break;
+        }
+    }
+
+    return isRecipeOk;
+}
+
+function addRecipesToDOM(recipes) {
+    const recipesContainer = document.querySelector('.recipesContainer');
+    recipesContainer.innerHTML = "";
+    recipes.forEach((recipe) => {
         const { getRecipeCardDOM, addIngredients } = recipeTemplate(recipe);
         const recipeCardDOM = getRecipeCardDOM();
         recipesContainer.appendChild(recipeCardDOM);
         addIngredients();
     })
+}
+
+function main() {
+
+    const mainBarSearch = document.querySelector('.mainSearch');
+    mainBarSearch.addEventListener('click', function() {
+        let mainSearch = mainBarSearch.value;
+        const recipesLength = recipes.length;
+
+        let matchAppliance = [];
+        let matchIngredients = [];
+        let matchUstensils = [];
+        let matchRecipes = [];
+
+        for (let i=0; i<recipesLength; i++) {
+
+            const recipe = recipes[i];
+            const recipeId = recipe.id;
+            const recipeName = recipe.name;
+            const recipeDescription = recipe.description;
+            const recipeIngredients = recipe.ingredients; 
+            const recipeAppliance = recipe.appliance;
+            const recipeUstensils = recipe.ustensils;
+
+            if(isString1IncludeInString2(mainSearch, recipeName) && !isRecipeAlreadyInArray(recipeId, matchRecipes)) {
+                matchRecipes.push(recipe);
+            }
+
+            if(isString1IncludeInString2(mainSearch, recipeDescription) && !isRecipeAlreadyInArray(recipeId, matchRecipes)) { // check if not alreay included
+                matchRecipes.push(recipe);
+            }
+
+            for (let j=0; j<recipeIngredients.length; j++) {
+                let ingredient = recipeIngredients[j].ingredient
+                if (isString1IncludeInString2(mainSearch, ingredient)) {
+                    if (!isRecipeAlreadyInArray(recipeId, matchRecipes)) {
+                        matchRecipes.push(recipe);
+                    }
+                    if (!isKeyWordAlreadyInArray(ingredient, matchIngredients)) {
+                        matchIngredients.push(ingredient);
+                    }
+                }
+            }
+            addKeywordsToDOM(matchIngredients, "ingredients");
+
+            if (isString1IncludeInString2(mainSearch, recipeAppliance) && !isKeyWordAlreadyInArray(recipeAppliance, matchAppliance)) {
+                matchAppliance.push(recipeAppliance);
+            }
+            addKeywordsToDOM(matchAppliance, "appliance");
+
+            for (let k=0; k<recipeUstensils.length; k++) {
+                let ustensil = recipeUstensils[k];
+                if (isString1IncludeInString2(mainSearch, ustensil) && !isKeyWordAlreadyInArray(ustensil, matchUstensils)) {
+                    matchUstensils.push(ustensil);
+                }
+            }
+            addKeywordsToDOM(matchUstensils, "ustensiles");
+
+        }
+        console.log(matchRecipes);
+        addRecipesToDOM(matchRecipes);
+        addTagsToDOM(matchRecipes);
+    })
+    
+    dropdown();
 }
 
 main();

@@ -5,3 +5,21 @@
     width: 90%;
     margin: auto;
 }
+
+.tag {
+    width: 165px;
+    background-color: #FFD15B;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px 10px 15px;
+    &__cross:hover {
+        cursor: pointer;
+    }
+}
+
+.selectedTags {
+    display: flex;
+}
