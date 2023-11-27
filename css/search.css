@@ -47,10 +47,10 @@ header {
 }
 
 .cardRecipe {
-  width: 300px;
+  width: 380px;
   background-color: white;
   border-radius: 20px;
-  margin-bottom: 15px;
+  margin-bottom: 55px;
   margin-left: 20px;
 }
 .cardRecipe__image {
@@ -76,10 +76,10 @@ header {
 .cardRecipe__name {
   font-family: "Anton", sans-serif;
   font-size: 18px;
-  margin: 20px 10px 20px 10px;
+  margin: 20px 10px 20px 20px;
 }
 .cardRecipe__recipe {
-  margin: 0px 10px 20px 10px;
+  margin: 0px 10px 20px 20px;
 }
 .cardRecipe__recipe__label {
   margin-bottom: 20px;
@@ -92,7 +92,7 @@ header {
   font-size: 14px;
 }
 .cardRecipe__ingredients {
-  margin: 0px 10px 20px 10px;
+  margin: 0px 20px 20px 20px;
   padding-bottom: 20px;
 }
 .cardRecipe__ingredients__label {
@@ -108,9 +108,10 @@ header {
 
 .ingredient {
   font-size: 14px;
-  width: 40%;
+  width: 35%;
   margin-top: 10px;
   margin-bottom: 10px;
+  padding-right: 50px;
 }
 .ingredient__name {
   font-weight: 500;
@@ -123,9 +124,15 @@ header {
 
 .tags {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: auto;
+  margin-bottom: 40px;
 }
 .tags__all {
   display: flex;
+  align-items: flex-start;
 }
 .tags__all__category {
   background-color: white;
@@ -207,6 +214,10 @@ header {
   display: none;
 }
 
+.tags__all__category1 {
+  background-color: red;
+}
+
 .recipesContainer {
   display: flex;
   flex-wrap: wrap;
@@ -231,6 +242,16 @@ header {
 
 .selectedTags {
   display: flex;
+}
+
+.tags__results {
+  display: flex;
+  width: 115px;
+  justify-content: space-between;
+  font-family: "Anton", sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+  color: #1B1B1B;
 }
 
 /*# sourceMappingURL=search.css.map */

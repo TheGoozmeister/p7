@@ -1,7 +1,13 @@
 .tags {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 40px;
     &__all {
         display: flex;
+        align-items: flex-start;
         &__category {
             background-color: white;
             width: 195px;
@@ -91,3 +97,6 @@
 }
 
 
+.tags__all__category1 {
+    background-color: red;
+}

@@ -133,6 +133,13 @@ function addTagsToDOM(matchRecipes) {
             const cross = tag.querySelector('.tag__cross');
             cross.addEventListener('click', function () {
                 tag.remove();
+                const cleanedTag = tag.textContent.trim();
+                for (let j=0; j<tags.ingredients.length; j++) {
+                    if (tags.ingredients[j]==cleanedTag) {
+                        tags.ingredients.splice(j, 1);
+                    }
+                }
+                updateRecipesWithTags(tags, matchRecipes);
             });
 
             const ingredientTags = document.querySelector('.selectedTags__ingredients');
@@ -162,6 +169,13 @@ function addTagsToDOM(matchRecipes) {
             const cross = tag.querySelector('.tag__cross');
             cross.addEventListener('click', function () {
                 tag.remove();
+                const cleanedTag = tag.textContent.trim();
+                for (let j=0; j<tags.appliances.length; j++) {
+                    if (tags.appliances[j]==cleanedTag) {
+                        tags.appliances.splice(j, 1);
+                    }
+                }
+                updateRecipesWithTags(tags, matchRecipes);
             });
 
             const applianceTags = document.querySelector('.selectedTags__appliance');
@@ -191,6 +205,13 @@ function addTagsToDOM(matchRecipes) {
             const cross = tag.querySelector('.tag__cross');
             cross.addEventListener('click', function () {
                 tag.remove();
+                const cleanedTag = tag.textContent.trim();
+                for (let j=0; j<tags.ustensiles.length; j++) {
+                    if (tags.ustensiles[j]==cleanedTag) {
+                        tags.ustensiles.splice(j, 1);
+                    }
+                }
+                updateRecipesWithTags(tags, matchRecipes);
             });
 
             const ustensileTags = document.querySelector('.selectedTags__ustensiles');
@@ -200,9 +221,6 @@ function addTagsToDOM(matchRecipes) {
             updateRecipesWithTags(tags, matchRecipes);
         })  
     }
-
-    
-    // update with tags
 
     return tags;
 }
@@ -278,6 +296,16 @@ function addRecipesToDOM(recipes) {
         const recipeCardDOM = getRecipeCardDOM();
         recipesContainer.appendChild(recipeCardDOM);
         addIngredients();
+    })
+    const recipesAmount = document.querySelector('.tags__results__amount');
+    recipesAmount.innerText = recipes.length;
+}
+
+function ingredientSearch() {
+    const ingredientSearchBar = document.getElementById('ingredientSearchBar');
+    ingredientSearchBar.addEventListener('click', function() {
+        let ingredientSearch = ingredientSearchBar.value;
+
     })
 }
 
