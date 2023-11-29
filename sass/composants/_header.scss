@@ -1,7 +1,12 @@
 header {
     background-image: url("../assets/pp_background.png");
+    background-size:cover;
     width: 100%;
     height: 667px;
+    padding-bottom: 30px;
+    @include smartphone {
+        height: 250px;
+    }
 }
 
 .logo {
@@ -9,6 +14,25 @@ header {
     padding-top: 50px;
     padding-bottom: 200px;
     padding-left: 50px;
+    @include smartphone {
+        padding-bottom: 30px;
+        padding-top: 10px;
+        padding-left: 10px;
+    }
+    &__title {
+        @include smartphone {
+            width: 100px;
+            padding-right: 5px;
+            & img {
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+    & img {
+        @include smartphone {
+        }
+    }
 }
 
 .tagline {
@@ -18,6 +42,11 @@ header {
     width: 70%;
     margin: auto;
     text-align: center;
+    @include smartphone {
+        font-size: 22px;
+        width: 95%;
+        padding-bottom: 20px;
+    }
 }
 
 .mainSearchbar{
@@ -27,13 +56,28 @@ header {
     width: 70%;
     margin: auto;
     margin-top: 20px;
+    @include smartphone {
+        height: 40px;
+    }
     & input {
         width: 100%;
         border-radius: 10px;
+        padding-left: 5px;
+        @include smartphone {
+            font-size: 10px;
+        }
     }
     &__loop{
         position: absolute;
         top: 10px;
         right: 5px;
+        @include smartphone {
+            top: 5px
+        }
+        & img {
+            @include smartphone {
+                width: 30px;
+            }
+        }
     }
 }

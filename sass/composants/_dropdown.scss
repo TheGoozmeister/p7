@@ -5,9 +5,20 @@
     width: 90%;
     margin: auto;
     margin-bottom: 40px;
+    @include smartphone {
+        display: block;
+        margin-top: -15px;
+        padding-top: 15px;
+    }
     &__all {
         display: flex;
         align-items: flex-start;
+        @include smartphone {
+            display: block;
+            width: 100%;
+            margin-left: 17%;
+            margin-right: 15%;
+        }
         &__category {
             background-color: white;
             width: 195px;

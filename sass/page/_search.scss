@@ -4,6 +4,10 @@
     justify-content: space-between;
     width: 90%;
     margin: auto;
+    @include smartphone {
+        width: 100%;
+        margin-left: 0;
+    }
 }
 
 .tag {
@@ -30,10 +34,19 @@
         display: flex;
         width: 115px;
         justify-content: space-between;
-        font-family: "Anton", sans-serif;
         font-size: 21px;
         font-weight: 400;
         color: #1B1B1B;
-        ;
+        @include smartphone{
+            padding-left: 15px;
+            padding-top: 10px;
+        }
+        &__amount {
+            font-family: 'Anton', sans-serif;
+        }
+        &__label {
+            font-family: 'Anton', sans-serif;
+
+        }
     }
 }

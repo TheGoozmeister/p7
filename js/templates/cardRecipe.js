@@ -44,7 +44,7 @@ export function recipeTemplate (recipeDatas) {
             <div class="cardRecipe__recipe__text">${description}</div>
         </div>
         <div class="cardRecipe__ingredients">
-            <div class="cardRecipe__ingredients__label">INGR2DIENTS</div>
+            <div class="cardRecipe__ingredients__label">INGR&Eacute;DIENTS</div>
             <div class="cardRecipe__ingredients__text" id="cardRecipe__ingredients__${id}"></div>
         </div>
         `

@@ -303,23 +303,29 @@ function addRecipesToDOM(recipes) {
 
 function ingredientSearch() {
     const ingredientSearchBar = document.getElementById('ingredientSearchBar');
-    
-    ingredientSearchBar.addEventListener('click', function() {
+
+    ingredientSearchBar.addEventListener('input', function() {
         let ingredientSearch = ingredientSearchBar.value;
         let matchIngredients = [];
+
+        
         for (let i=0; i<recipes.length; i++) {
             const recipeIngredients = recipes[i].ingredients;
             for (let j=0; j<recipeIngredients.length; j++) {
                 let ingredient = recipeIngredients[j].ingredient
-                if (isString1IncludeInString2(ingredientSearch, ingredient)) {
-                    if (!isKeyWordAlreadyInArray(ingredient, matchIngredients)) {
-                        matchIngredients.push(ingredient);
+                if (ingredientSearch.length<3) {
+                    matchIngredients.push(ingredient)
+                } else {
+                    if (isString1IncludeInString2(ingredientSearch, ingredient)) {
+                        if (!isKeyWordAlreadyInArray(ingredient, matchIngredients)) {
+                            matchIngredients.push(ingredient);
+                        }
                     }
                 }
             }
-        }
         addKeywordsToDOM(matchIngredients, "ingredients");
         addTagsToDOM(recipes);
+        }
     })
 }
 
@@ -369,61 +375,67 @@ function applianceSearch() {
 function main() {
 
     const mainBarSearch = document.querySelector('.mainSearch');
-    mainBarSearch.addEventListener('click', function() {
-        let mainSearch = mainBarSearch.value;
-        const recipesLength = recipes.length;
+    addRecipesToDOM(recipes);
 
-        let matchAppliance = [];
-        let matchIngredients = [];
-        let matchUstensils = [];
+    mainBarSearch.addEventListener('input', function() {
+        let mainSearch = mainBarSearch.value;
         let matchRecipes = [];
 
-        for (let i=0; i<recipesLength; i++) {
+        if (mainSearch.length<3) {
+            matchRecipes = recipes;
+        } else {
+            const recipesLength = recipes.length;
 
-            const recipe = recipes[i];
-            const recipeId = recipe.id;
-            const recipeName = recipe.name;
-            const recipeDescription = recipe.description;
-            const recipeIngredients = recipe.ingredients; 
-            const recipeAppliance = recipe.appliance;
-            const recipeUstensils = recipe.ustensils;
+            let matchAppliance = [];
+            let matchIngredients = [];
+            let matchUstensils = [];
 
-            if(isString1IncludeInString2(mainSearch, recipeName) && !isRecipeAlreadyInArray(recipeId, matchRecipes)) {
-                matchRecipes.push(recipe);
-            }
+            for (let i=0; i<recipesLength; i++) {
 
-            if(isString1IncludeInString2(mainSearch, recipeDescription) && !isRecipeAlreadyInArray(recipeId, matchRecipes)) { // check if not alreay included
-                matchRecipes.push(recipe);
-            }
+                const recipe = recipes[i];
+                const recipeId = recipe.id;
+                const recipeName = recipe.name;
+                const recipeDescription = recipe.description;
+                const recipeIngredients = recipe.ingredients; 
+                const recipeAppliance = recipe.appliance;
+                const recipeUstensils = recipe.ustensils;
 
-            for (let j=0; j<recipeIngredients.length; j++) {
-                let ingredient = recipeIngredients[j].ingredient
-                if (isString1IncludeInString2(mainSearch, ingredient)) {
-                    if (!isRecipeAlreadyInArray(recipeId, matchRecipes)) {
-                        matchRecipes.push(recipe);
-                    }
-                    if (!isKeyWordAlreadyInArray(ingredient, matchIngredients)) {
-                        matchIngredients.push(ingredient);
+                if(isString1IncludeInString2(mainSearch, recipeName) && !isRecipeAlreadyInArray(recipeId, matchRecipes)) {
+                    matchRecipes.push(recipe);
+                }
+
+                if(isString1IncludeInString2(mainSearch, recipeDescription) && !isRecipeAlreadyInArray(recipeId, matchRecipes)) { // check if not alreay included
+                    matchRecipes.push(recipe);
+                }
+
+                for (let j=0; j<recipeIngredients.length; j++) {
+                    let ingredient = recipeIngredients[j].ingredient
+                    if (isString1IncludeInString2(mainSearch, ingredient)) {
+                        if (!isRecipeAlreadyInArray(recipeId, matchRecipes)) {
+                            matchRecipes.push(recipe);
+                        }
+                        if (!isKeyWordAlreadyInArray(ingredient, matchIngredients)) {
+                            matchIngredients.push(ingredient);
+                        }
                     }
                 }
-            }
-            addKeywordsToDOM(matchIngredients, "ingredients");
+                addKeywordsToDOM(matchIngredients, "ingredients");
 
-            if (isString1IncludeInString2(mainSearch, recipeAppliance) && !isKeyWordAlreadyInArray(recipeAppliance, matchAppliance)) {
-                matchAppliance.push(recipeAppliance);
-            }
-            addKeywordsToDOM(matchAppliance, "appliance");
-
-            for (let k=0; k<recipeUstensils.length; k++) {
-                let ustensil = recipeUstensils[k];
-                if (isString1IncludeInString2(mainSearch, ustensil) && !isKeyWordAlreadyInArray(ustensil, matchUstensils)) {
-                    matchUstensils.push(ustensil);
+                if (isString1IncludeInString2(mainSearch, recipeAppliance) && !isKeyWordAlreadyInArray(recipeAppliance, matchAppliance)) {
+                    matchAppliance.push(recipeAppliance);
                 }
-            }
-            addKeywordsToDOM(matchUstensils, "ustensiles");
+                addKeywordsToDOM(matchAppliance, "appliance");
 
+                for (let k=0; k<recipeUstensils.length; k++) {
+                    let ustensil = recipeUstensils[k];
+                    if (isString1IncludeInString2(mainSearch, ustensil) && !isKeyWordAlreadyInArray(ustensil, matchUstensils)) {
+                        matchUstensils.push(ustensil);
+                    }
+                }
+                addKeywordsToDOM(matchUstensils, "ustensiles");
+            }
         }
-        console.log(matchRecipes);
+        
         addRecipesToDOM(matchRecipes);
         addTagsToDOM(matchRecipes);
     })
