@@ -303,53 +303,103 @@ function addRecipesToDOM(recipes) {
 
 function ingredientSearch() {
     const ingredientSearchBar = document.getElementById('ingredientSearchBar');
-
+    
+    let matchIngredients = [];
+    for (let i = 0; i < recipes.length; i++) {
+        const recipeIngredients = recipes[i].ingredients;
+        for (let j = 0; j < recipeIngredients.length; j++) {
+            let ingredient = recipeIngredients[j].ingredient;
+            if (!isKeyWordAlreadyInArray(ingredient, matchIngredients)) {
+                matchIngredients.push(ingredient);
+            }
+        }
+    }
+    addKeywordsToDOM(matchIngredients, "ingredients");
+    addTagsToDOM(recipes);
+    
     ingredientSearchBar.addEventListener('input', function() {
-        let ingredientSearch = ingredientSearchBar.value;
         let matchIngredients = [];
-
-        
-        for (let i=0; i<recipes.length; i++) {
-            const recipeIngredients = recipes[i].ingredients;
-            for (let j=0; j<recipeIngredients.length; j++) {
-                let ingredient = recipeIngredients[j].ingredient
-                if (ingredientSearch.length<3) {
-                    matchIngredients.push(ingredient)
-                } else {
+        let ingredientSearch = ingredientSearchBar.value;
+        if (ingredientSearch.length<3) {
+            for (let i=0; i<recipes.length; i++) {
+                const recipeIngredients = recipes[i].ingredients;
+                for (let j=0; j<recipeIngredients.length; j++) {
+                    let ingredient = recipeIngredients[j].ingredient
+                    if (!isKeyWordAlreadyInArray(ingredient, matchIngredients)) {
+                        matchIngredients.push(ingredient);
+                    }
+                }
+            }
+            addKeywordsToDOM(matchIngredients, "ingredients");
+            addTagsToDOM(recipes);
+        } else {
+            for (let i=0; i<recipes.length; i++) {
+                const recipeIngredients = recipes[i].ingredients;
+                for (let j=0; j<recipeIngredients.length; j++) {
+                    let ingredient = recipeIngredients[j].ingredient
+                    
                     if (isString1IncludeInString2(ingredientSearch, ingredient)) {
                         if (!isKeyWordAlreadyInArray(ingredient, matchIngredients)) {
                             matchIngredients.push(ingredient);
                         }
                     }
+                    
                 }
+            addKeywordsToDOM(matchIngredients, "ingredients");
+            addTagsToDOM(recipes);
             }
-        addKeywordsToDOM(matchIngredients, "ingredients");
-        addTagsToDOM(recipes);
         }
     })
 }
 
 function ustensilesSearch() {
     const ustensileSearchBar = document.getElementById('ustensileSearchBar');
-    
-    ustensileSearchBar.addEventListener('click', function() {
+    let matchUstensiles =[];
+
+    for (let i=0; i<recipes.length; i++) {
+        const recipeUstensiles = recipes[i].ustensils;
+        for (let j=0; j<recipeUstensiles.length; j++) {
+            let ustensile = recipeUstensiles[j];
+            if (!isKeyWordAlreadyInArray(ustensile, matchUstensiles)) {
+                matchUstensiles.push(ustensile);
+            }
+        }
+    }
+    addKeywordsToDOM(matchUstensiles, "ustensiles");
+    addTagsToDOM(recipes);
+
+    ustensileSearchBar.addEventListener('input', function() {
         let ustensileSearch = ustensileSearchBar.value;
-        console.log(ustensileSearch)
         let matchUstensiles = [];
-        for (let i=0; i<recipes.length; i++) {
-            const recipeUstensiles = recipes[i].ustensils;
-            for (let j=0; j<recipeUstensiles.length; j++) {
-                let ustensile = recipeUstensiles[j];
-                if (isString1IncludeInString2(ustensileSearch, ustensile)) {
+
+        if (ustensileSearch.length<3) {
+            for (let i=0; i<recipes.length; i++) {
+                const recipeUstensiles = recipes[i].ustensils;
+                for (let j=0; j<recipeUstensiles.length; j++) {
+                    let ustensile = recipeUstensiles[j];
                     if (!isKeyWordAlreadyInArray(ustensile, matchUstensiles)) {
                         matchUstensiles.push(ustensile);
-                        console.log("ok")
                     }
                 }
             }
+            addKeywordsToDOM(matchUstensiles, "ustensiles");
+            addTagsToDOM(recipes);
+        } else {
+            for (let i=0; i<recipes.length; i++) {
+                const recipeUstensiles = recipes[i].ustensils;
+                for (let j=0; j<recipeUstensiles.length; j++) {
+                    let ustensile = recipeUstensiles[j];
+                    if (isString1IncludeInString2(ustensileSearch, ustensile)) {
+                        if (!isKeyWordAlreadyInArray(ustensile, matchUstensiles)) {
+                            matchUstensiles.push(ustensile);
+                            console.log("ok")
+                        }
+                    }
+                }
+            }
+            addKeywordsToDOM(matchUstensiles, "ustensiles");
+            addTagsToDOM(recipes);
         }
-        addKeywordsToDOM(matchUstensiles, "ustensiles");
-        addTagsToDOM(recipes);
     })
 }
 
