@@ -1,7 +1,8 @@
-recherche champs secondaires
+recherche champs secondaires OK
 actualiser recettes en fonction des tags OK
-gérer les display 
+gérer les display  OK
 gérer les majuscules/minuscules
-gérer css card
-faire deuxieme algo sur deuxieme branche
-gérer lactualisation quand on clique sur une croix
+gérer css card OK
+faire deuxieme algo sur deuxieme branche OK
+gérer lactualisation quand on clique sur une croix OK
+gérer bug plusieurs fois le mot clé

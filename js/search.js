@@ -75,6 +75,8 @@ function isKeyWordAlreadyInArray(keyword, array) {
     return array.some(item => item.toLowerCase() === keyword.toLowerCase());
 }
 
+
+
 function addTagsToDOM(matchRecipes) {
     const tags = {
         ingredients: [],
@@ -85,9 +87,10 @@ function addTagsToDOM(matchRecipes) {
     const addTagEventListener = (tagType, tagsArray, tagContainer) => {
         tagsArray.forEach(tagElement => {
             const cleanKeyword = tagElement.textContent.trim();
-
+            console.log(cleanKeyword)
             tagElement.addEventListener('click', () => {
                 const tag = createTagElement(tagElement.textContent);
+                console.log(tag);
                 const cross = tag.querySelector('.tag__cross');
 
                 cross.addEventListener('click', () => {
@@ -98,6 +101,7 @@ function addTagsToDOM(matchRecipes) {
 
                 tagContainer.appendChild(tag);
                 tags[tagType].push(cleanKeyword);
+                console.log(tags[tagType])
                 tagElement.remove();
                 updateRecipesWithTags(tags, matchRecipes);
             });
@@ -301,20 +305,6 @@ function applianceSearch() {
     });
 }
 
-function getUniqueKeywords(recipes, key) {
-    return [...new Set(recipes.flatMap(recipe => {
-        const items = recipe[key];
-        if (Array.isArray(items)) {
-            return items.map(item => {
-                if (typeof item === 'object' && 'ingredient' in item) {
-                    return String(item.ingredient).toLowerCase();
-                }
-                return String(item).toLowerCase();
-            });
-        }
-        return [];
-    }))];
-}
 
 function main() {
     const mainBarSearch = document.querySelector('.mainSearch');
@@ -323,6 +313,9 @@ function main() {
     mainBarSearch.addEventListener('input', function() {
         let mainSearch = mainBarSearch.value.toLowerCase();
         let matchRecipes = [];
+        let matchIngredients = [];
+        let matchAppliance = [];
+        let matchUstensils = [];
 
         if (mainSearch.length<3) {
             matchRecipes = recipes;
@@ -335,18 +328,22 @@ function main() {
                 const recipeAppliance = recipe.appliance.toLowerCase();
                 const recipeUstensils = recipe.ustensils.map(ustensil => ustensil.toLowerCase());
 
-                return (
+                if (
                     recipeName.includes(mainSearch) ||
                     recipeDescription.includes(mainSearch) ||
                     recipeIngredients.some(ingredient => ingredient.includes(mainSearch)) ||
-                    recipeAppliance.includes(mainSearch) || 
+                    recipeAppliance.includes(mainSearch) ||
                     recipeUstensils.some(ustensil => ustensil.includes(mainSearch))
-                );  
-            })
+                ) {
+                    matchIngredients = matchIngredients.concat(recipeIngredients.filter(ingredient => ingredient.includes(mainSearch) && !matchIngredients.includes(ingredient)));
+                    matchAppliance.push(recipeAppliance);
+                    matchUstensils = matchUstensils.concat(recipeUstensils.filter(ustensil => ustensil.includes(mainSearch) && !matchUstensils.includes(ustensil)));
 
-            let matchIngredients = getUniqueKeywords(matchRecipes, "ingredients");
-            let matchAppliance = getUniqueKeywords(matchRecipes, "appliance");
-            let matchUstensils = getUniqueKeywords(matchRecipes, "ustensiles");
+                    return true;
+                }
+
+                return false;
+            })
 
             addKeywordsToDOM(matchIngredients, "ingredients");
             addKeywordsToDOM(matchAppliance, "appliance");
