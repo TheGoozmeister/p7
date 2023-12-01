@@ -6,3 +6,4 @@ gérer les majuscules/minuscules
 gérer css card -> ingrédients, 4lignes pour description
 faire deuxieme algo sur deuxieme branche
 gérer lactualisation quand on clique sur une croix OK
+prévoir le cas 0 recette trouvée
