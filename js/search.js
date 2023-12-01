@@ -1,6 +1,7 @@
 import recipes from "../datas/recipes.js";
 import { recipeTemplate } from './templates/cardRecipe.js';
 
+
 function dropdown() {
     const ingredientsDropdown = document.getElementById('ingredientsDropdown');
     const ingredientKeywords = document.getElementById('ingredientsKeywords');
@@ -359,3 +360,6 @@ function main() {
 }
 
 main();
+
+
+
