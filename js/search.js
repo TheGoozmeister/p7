@@ -165,7 +165,7 @@ function areTagsInRecipe(tags, recipe) {
     return isIngredientIncluded && isApplianceIncluded && isUstensilIncluded;
 }
 
-function addRecipesToDOM(recipes) {
+function addRecipesToDOM(recipes, mainSearch) {
     const recipesContainer = document.querySelector('.recipesContainer');
     recipesContainer.innerHTML = "";
     recipes.forEach((recipe) => {
@@ -176,6 +176,14 @@ function addRecipesToDOM(recipes) {
     })
     const recipesAmount = document.querySelector('.tags__results__amount');
     recipesAmount.innerText = recipes.length;
+
+    if (recipes.length==0){
+        recipesContainer.innerHTML= `
+        <div class="norecipe">
+            Aucune recette ne contient "${mainSearch}" vous pouvez chercher «
+            tarte aux pommes », « poisson », etc. 
+        </div>`;
+    }
 }
 
 function updateIngredientKeywords() {
@@ -350,7 +358,7 @@ function main() {
             addKeywordsToDOM(matchAppliance, "appliance");
             addKeywordsToDOM(matchUstensils, "ustensiles");
         }
-        addRecipesToDOM(matchRecipes);
+        addRecipesToDOM(matchRecipes, mainSearch);
         addTagsToDOM(matchRecipes);
     })
     dropdown();
