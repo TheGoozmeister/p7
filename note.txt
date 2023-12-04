@@ -1,9 +1,2 @@
-recherche champs secondaires OK 
-tous les tags sans caractere
-actualiser recettes en fonction des tags OK
-gérer les display OK
 gérer les majuscules/minuscules
-gérer css card -> ingrédients, 4lignes pour description
-faire deuxieme algo sur deuxieme branche
-gérer lactualisation quand on clique sur une croix OK
 prévoir le cas 0 recette trouvée
