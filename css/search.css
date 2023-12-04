@@ -303,6 +303,11 @@ header {
   background-color: red;
 }
 
+.ingredients__search__suggests, .appliance__search__suggests, .ustensiles__search__suggests {
+  max-height: 165px;
+  overflow: hidden;
+}
+
 .recipesContainer {
   display: flex;
   flex-wrap: wrap;
