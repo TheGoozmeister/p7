@@ -94,7 +94,7 @@ function addKeywordsToDOM(tagsArray, tagName) {
 
 function isKeyWordAlreadyInArray(keyword, array) {
     for (let i=0;i<array.length;i++) {
-        if (array[i]==keyword) {
+        if (array[i].toLowerCase()==keyword.toLowerCase()) {
             return true;
         }
     }
