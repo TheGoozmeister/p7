@@ -288,7 +288,7 @@ function areTagsInRecipe(tags, recipe) {
     return isRecipeOk;
 }
 
-function addRecipesToDOM(recipes) {
+function addRecipesToDOM(recipes, mainSearch) {
     const recipesContainer = document.querySelector('.recipesContainer');
     recipesContainer.innerHTML = "";
     recipes.forEach((recipe) => {
@@ -299,6 +299,14 @@ function addRecipesToDOM(recipes) {
     })
     const recipesAmount = document.querySelector('.tags__results__amount');
     recipesAmount.innerText = recipes.length;
+
+    if (recipes.length==0){
+        recipesContainer.innerHTML= `
+        <div class="norecipe">
+            Aucune recette ne contient "${mainSearch}" vous pouvez chercher «
+            tarte aux pommes », « poisson », etc. 
+        </div>`;
+    }
 }
 
 function ingredientSearch() {
@@ -436,7 +444,7 @@ function main() {
             }
         }
         
-        addRecipesToDOM(matchRecipes);
+        addRecipesToDOM(matchRecipes, mainSearch);
         addTagsToDOM(matchRecipes);
     })
     
