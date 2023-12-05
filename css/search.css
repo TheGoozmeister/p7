@@ -303,6 +303,11 @@ header {
   background-color: red;
 }
 
+.ingredients__search__suggests, .appliance__search__suggests, .ustensiles__search__suggests {
+  max-height: 165px;
+  overflow: scroll;
+}
+
 .recipesContainer {
   display: flex;
   flex-wrap: wrap;
@@ -355,12 +360,6 @@ header {
 }
 .tags__results__label {
   font-family: "Anton", sans-serif;
-}
-
-.norecipe {
-  width: 80%;
-  margin: auto;
-  padding-bottom: 300px;
 }
 
 /*# sourceMappingURL=search.css.map */
