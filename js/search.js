@@ -311,7 +311,7 @@ function addRecipesToDOM(recipes, mainSearch) {
 
 function ingredientSearch() {
     const ingredientSearchBar = document.getElementById('ingredientSearchBar');
-
+    updateIngredientKeywords();
     ingredientSearchBar.addEventListener('input', function() {
         let ingredientSearch = ingredientSearchBar.value;
         let matchIngredients = [];
@@ -337,9 +337,55 @@ function ingredientSearch() {
     })
 }
 
+function updateIngredientKeywords() {
+    let matchIngredients = [];
+    
+    recipes.forEach(recipe => {
+        recipe.ingredients.forEach(ingredientObj => {
+            const ingredient = ingredientObj.ingredient;
+            if (!isKeyWordAlreadyInArray(ingredient, matchIngredients)) {
+                matchIngredients.push(ingredient);
+            }
+        });
+    });
+
+    addKeywordsToDOM(matchIngredients, "ingredients");
+    addTagsToDOM(recipes);
+}
+
+function updateUstensileKeywords() {
+    let matchUstensiles = [];
+
+    recipes.forEach(recipe => {
+        recipe.ustensils.forEach(ustensile => {
+            if (!isKeyWordAlreadyInArray(ustensile, matchUstensiles)) {
+                matchUstensiles.push(ustensile);
+            }
+        });
+    });
+
+    addKeywordsToDOM(matchUstensiles, "ustensiles");
+    addTagsToDOM(recipes);
+}
+
+function updateApplianceKeywords() {
+    let matchAppliances = [];
+
+    recipes.forEach(recipe => {
+        const appliance = recipe.appliance;
+        if (!isKeyWordAlreadyInArray(appliance, matchAppliances)) {
+            matchAppliances.push(appliance);
+        }
+    });
+
+    addKeywordsToDOM(matchAppliances, "appliance");
+    addTagsToDOM(recipes);
+}
+
+
 function ustensilesSearch() {
     const ustensileSearchBar = document.getElementById('ustensileSearchBar');
-    
+    updateUstensileKeywords();
     ustensileSearchBar.addEventListener('click', function() {
         let ustensileSearch = ustensileSearchBar.value;
         console.log(ustensileSearch)
@@ -363,7 +409,7 @@ function ustensilesSearch() {
 
 function applianceSearch() {
     const applianceSearchBar = document.getElementById('applianceSearchBar')
-
+    updateApplianceKeywords();
     applianceSearchBar.addEventListener('click', function(){
         let applianceSearch = applianceSearchBar.value;
         let matchAppliance = [];
